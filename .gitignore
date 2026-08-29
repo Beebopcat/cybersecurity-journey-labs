@@ -1,0 +1,80 @@
+# ─── Secrets & credentials ───────────────────────────────────────────
+# Nothing in these patterns should EVER reach a commit. If a secret is
+# ever committed, rotating the credential is mandatory — deleting the
+# file does not remove it from git history.
+*.key
+*.pem
+*.pfx
+*.p12
+*.ppk
+*.env
+.env
+.env.*
+!.env.example
+secrets.*
+credentials.*
+*credential*
+*password*
+*apikey*
+*api_key*
+*api-keys*
+*API Keys*
+# NOTE: *token* is intentionally over-broad. It will also exclude innocent files
+# like auth-token-notes.md. Over-exclusion is the safe failure mode here -
+# add a targeted negation (as below) rather than loosening the pattern.
+*token*
+!*tokenizer*
+.netrc
+.npmrc
+.pypirc
+id_rsa
+id_ed25519
+*.ovpn
+*.kdbx
+
+# ─── Cloud / infrastructure state ────────────────────────────────────
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.aws/
+.azure/
+kubeconfig
+*.kubeconfig
+
+# ─── Lab artifacts that may contain host detail ──────────────────────
+# Raw captures and exports routinely embed hostnames, internal IPs,
+# usernames and MAC addresses. Sanitised excerpts go in the writeup;
+# raw files stay local.
+*.pcap
+*.pcapng
+*.evtx
+*.etl
+*.dmp
+*.mem
+raw/
+_private/
+_unsanitised/
+
+# ─── OS & editor noise ───────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# ─── Build & dependency output ───────────────────────────────────────
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+bin/
+obj/
+dist/
+build/
