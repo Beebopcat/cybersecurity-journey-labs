@@ -28,9 +28,19 @@ from the start would be a less honest document and a less useful one.
 
 ---
 
+## AI-assisted learning projects
+
+These components support learning and are separate from the independently documented lab writeups above.
+
+- [Offline permissions simulator](projects/permissions-simulator/) — fictional in-memory exercises, bounded command parsing, policy evaluation, and **10 passing automated tests**. Source and test fixtures are included. This component does not execute a real shell or modify host permissions.
+
+---
+
 ## Certification track
 
-**CompTIA A+ Core 1 → A+ Core 2 → Network+ → Security+**
+**CompTIA A+ Core 1 → A+ Core 2 → Network+ → Security+ → CySA+**
+
+A+ Core 1 is in progress; the remaining certifications are planned.
 
 Sequenced on purpose. Security+ assumes networking fluency it does not teach, so I'm building the
 foundation before the credential that depends on it.
@@ -58,6 +68,11 @@ labs/
   NN-short-descriptive-name/
     README.md        the writeup
     evidence/        sanitised excerpts only
+projects/
+  permissions-simulator/
+    README.md        scope, examples, and verification
+    *.mjs            implementation and tests
+    fixtures.json    fictional exercise data
 _meta/
   LAB-TEMPLATE.md    the structure every lab follows
 ```
