@@ -1,0 +1,84 @@
+{
+  "fixture": {
+    "id": "archive-v1",
+    "workingDirectory": "/home/student/academy/archive",
+    "file": {
+      "name": "supply-ledger.txt",
+      "type": "regular_file",
+      "owner": "student",
+      "group": "archivists",
+      "initialMode": "0600",
+      "targetMode": "0640",
+      "contents": "Fictional lantern supplies. Contains no personal or production records."
+    },
+    "accounts": {
+      "student": {
+        "memberOf": [
+          "archivists"
+        ],
+        "role": "owner",
+        "privileged": false
+      },
+      "archivist": {
+        "memberOf": [
+          "archivists"
+        ],
+        "role": "teammate",
+        "privileged": false
+      },
+      "visitor": {
+        "memberOf": [],
+        "role": "unrelated visitor",
+        "privileged": false
+      }
+    },
+    "desiredAccess": {
+      "student": {
+        "read": true,
+        "write": true,
+        "execute": false
+      },
+      "archivist": {
+        "read": true,
+        "write": false,
+        "execute": false
+      },
+      "visitor": {
+        "read": false,
+        "write": false,
+        "execute": false
+      }
+    }
+  },
+  "stages": [
+    {
+      "id": "transfer",
+      "variant": {
+        "file": "watering-schedule.txt",
+        "owner": {
+          "account": "student",
+          "memberOf": [
+            "gardeners"
+          ],
+          "privileged": false
+        },
+        "group": "gardeners",
+        "initialMode": "0604",
+        "targetMode": "0640",
+        "workingDirectory": "/home/student/academy/greenhouse",
+        "teammate": {
+          "account": "gardener",
+          "memberOf": [
+            "gardeners"
+          ],
+          "privileged": false
+        },
+        "visitor": {
+          "account": "visitor",
+          "memberOf": [],
+          "privileged": false
+        }
+      }
+    }
+  ]
+}
