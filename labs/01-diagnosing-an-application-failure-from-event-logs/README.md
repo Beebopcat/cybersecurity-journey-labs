@@ -20,7 +20,7 @@ whole point of this lab.
 
 | Assumption | Reality |
 |---|---|
-| The app is crashing | **It never crashed once.** Zero crash events in 14 days |
+| The app is crashing | **No target-application crash events were found in the reviewed 14-day logs.** |
 | It's a memory leak | Process tree held steady at 1.6–1.9 GB with 5–6 GB free |
 | The machine is unstable | No hardware errors logged at all |
 
@@ -45,7 +45,7 @@ Get-WinEvent -FilterHashtable @{
 ```
 
 Result for the target application: **0 events.** Windows Reliability History also had no entry.
-An application that truly crashes leaves a trace in at least one of these. This one left none.
+These reviewed sources contained no target-application crash record; that does not rule out an unrecorded crash.
 
 **Finding:** the symptom is real, but "crash" is the wrong word for it.
 
@@ -66,6 +66,8 @@ $wer | ForEach-Object {
     ($_.Message -split "`n") | Where-Object { $_ -match '^Event Name:' }
 } | Group-Object | Sort-Object Count -Descending
 ```
+
+Selected categories are shown below; they account for 848 of the 883 entries. The remaining 35 entries are not classified in this writeup.
 
 | Count | Event name | What it actually is |
 |---|---|---|
@@ -189,8 +191,8 @@ you *how* wrong. Always sample twice before acting.
    investigation would have gone the wrong direction on trust.
 2. **Read the application's own log first.** It had already printed the answer and the remedy.
 3. **Volume is not severity.** 883 error reports contained zero relevant events.
-4. **Correlate timestamps to establish causality.** Ninety seconds and dependency order is
-   evidence; "these both look broken" is not.
+4. **Use timestamp correlation to test causal hypotheses.** Timing and dependency order support
+   investigation but do not establish causality by themselves.
 5. **Distinguish the repair from the fix.** Rebooting restored service. Changing the update
    habit is what stops it recurring.
 6. **Measure rates, not totals.**
