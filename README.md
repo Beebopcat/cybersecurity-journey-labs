@@ -36,6 +36,25 @@ These components support learning and are separate from the independently docume
 
 ---
 
+## Media: the permissions simulator in the browser
+
+A browser sample UI of the offline permissions simulator is live at [https://beebopcat.github.io/public-demos/permissions/](https://beebopcat.github.io/public-demos/permissions/) (also on [caseyshingledecker.com](https://caseyshingledecker.com/demos/permissions/index.html)). It is a simulation only: not Linux, not a shell and not a VM, and it executes no commands on the host. The sample UI is hosted in the [public-demos](https://github.com/Beebopcat/public-demos) repository; the authoritative implementation and its 10 tests are in `projects/permissions-simulator/`.
+
+### Screenshots
+
+| | |
+|:--:|:--:|
+| ![Linux permissions simulator at its starting state, with mode bits 0600, a command field and the output log reading Sample UI ready.](docs/media/permissions/01.webp) | ![After Run on chmod g+r, mode bits show 0640 and the output reports owner kept, group read and visitor denied.](docs/media/permissions/02.webp) |
+| <sub>Linux permissions simulator at its starting state, with mode bits 0600, a command field and the output log reading Sample UI ready.</sub> | <sub>After Run on chmod g+r, mode bits show 0640 and the output reports owner kept, group read and visitor denied.</sub> |
+| ![After chmod o-r and Run, the output log lists repeated sample result lines with mode 0640.](docs/media/permissions/03.webp) | ![After ls -l supply-ledger.txt is run, the output log shows the same sample result lines.](docs/media/permissions/04.webp) |
+| <sub>After chmod o-r and Run, the output log lists repeated sample result lines with mode 0640.</sub> | <sub>After ls -l supply-ledger.txt is run, the output log shows the same sample result lines.</sub> |
+
+#### Video
+
+[![Linux permissions simulator at its starting state, with mode bits 0600, a command field and the output log reading Sample UI ready.](docs/media/permissions/poster.webp)](docs/media/permissions/clip.mp4)
+
+---
+
 ## Certification track
 
 **CompTIA A+ Core 1 → A+ Core 2 → Network+ → Security+ → CySA+**
