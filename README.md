@@ -99,3 +99,7 @@ _meta/
 ---
 
 **Casey Shingledecker** · [github.com/Beebopcat](https://github.com/Beebopcat)
+
+## License
+
+Copyright (c) 2026 Casey Shingledecker. All rights reserved. Source-available for viewing and for personal, non-commercial running only; this is not open source. See [LICENSE](LICENSE). Other people's material keeps its own license.
