@@ -1,5 +1,36 @@
 # Cybersecurity Journey — Labs
 
+**Documented IT-support and security troubleshooting labs, plus a small Node.js permissions simulator with automated tests.**
+
+**Why it matters:** this is the everyday work of IT support and entry-level SOC roles: reading Windows Event Logs with PowerShell, telling a real fault from noise, finding root cause by correlating timestamps, and sanitising evidence before it is published. The simulator adds least-privilege reasoning (file permissions) with strict input parsing and tests.
+
+**Stack:** PowerShell 5.1, Windows Event Viewer and Windows Error Reporting, Node.js (ES modules, built-in `node:test`).
+
+### Proof
+
+- **10 passing automated tests** for the permissions simulator (`node --test`). I ran them on Windows 11 with Node.js 24 (10 of 10 passed); they have no dependencies, so any Node.js 22+ should run them. They are not yet run automatically in CI.
+- **Lab 01** is a full writeup of a real troubleshooting case: [Diagnosing an application failure from Windows Event Logs](labs/01-diagnosing-an-application-failure-from-event-logs/).
+- **Live browser demo** of the simulator's sample UI: [beebopcat.github.io/public-demos/permissions](https://beebopcat.github.io/public-demos/permissions/).
+- Screenshots and a short clip are in [Media](#media-the-permissions-simulator-in-the-browser) below.
+
+### Quick start
+
+```sh
+git clone https://github.com/Beebopcat/cybersecurity-journey-labs.git
+cd cybersecurity-journey-labs/projects/permissions-simulator
+node --test permission-simulator.test.mjs
+```
+
+Needs Node.js 22 or newer. No npm packages and no network access. Read Lab 01 by opening its README in `labs/`.
+
+### Limitations
+
+- One lab is published so far; more are planned. The A+ Core 1 certification is in progress and the others are planned, not earned.
+- The simulator models only read/write/execute bits on one fictional file. It does not run a shell, touch a real filesystem or change real permissions.
+- Lab evidence is sanitised, so raw logs, hostnames and exports are intentionally not included.
+- The simulator code and tests were produced with AI assistance and then reviewed (details in its README).
+
+---
 Hands-on lab work documented as I move from IT fundamentals toward a SOC analyst role.
 
 Every entry here follows the same rule: **a real problem, a documented method, and a verified
