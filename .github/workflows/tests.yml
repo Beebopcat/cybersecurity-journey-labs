@@ -1,0 +1,23 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  permissions-simulator:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/permissions-simulator
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run the permissions simulator tests (10 tests, no dependencies)
+        run: node --test permission-simulator.test.mjs
