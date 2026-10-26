@@ -1,5 +1,7 @@
 # Cybersecurity Journey — Labs
 
+[![tests](https://github.com/Beebopcat/cybersecurity-journey-labs/actions/workflows/tests.yml/badge.svg)](https://github.com/Beebopcat/cybersecurity-journey-labs/actions/workflows/tests.yml)
+
 **Documented IT-support and security troubleshooting labs, plus a small Node.js permissions simulator with automated tests.**
 
 **Why it matters:** this is the everyday work of IT support and entry-level SOC roles: reading Windows Event Logs with PowerShell, telling a real fault from noise, finding root cause by correlating timestamps, and sanitising evidence before it is published. The simulator adds least-privilege reasoning (file permissions) with strict input parsing and tests.
@@ -8,7 +10,7 @@
 
 ### Proof
 
-- **10 passing automated tests** for the permissions simulator (`node --test`). I ran them on Windows 11 with Node.js 24 (10 of 10 passed); they have no dependencies, so any Node.js 22+ should run them. They are not yet run automatically in CI.
+- **10 passing automated tests** for the permissions simulator (`node --test`). I ran them on Windows 11 with Node.js 24 (10 of 10 passed); they have no dependencies, so any Node.js 22+ should run them. GitHub Actions runs them on every push.
 - **Lab 01** is a full writeup of a real troubleshooting case: [Diagnosing an application failure from Windows Event Logs](labs/01-diagnosing-an-application-failure-from-event-logs/).
 - **Live browser demo** of the simulator's sample UI: [beebopcat.github.io/public-demos/permissions](https://beebopcat.github.io/public-demos/permissions/).
 - Screenshots and a short clip are in [Media](#media-the-permissions-simulator-in-the-browser) below.
