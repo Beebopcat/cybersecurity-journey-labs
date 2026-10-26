@@ -19,6 +19,12 @@
 - Download only from the official pages (Microsoft Sysinternals; the SwiftOnSecurity and Red Canary GitHub repositories) and record the file hashes.
 - Do not commit the Sysmon config or any tool into this repo; link to it. Raw `.evtx` exports stay local.
 
+**VM guard.** Paste this as the **first line** of every elevated PowerShell session and script in this lab. It stops everything unless the machine reports itself as a virtual machine:
+
+```powershell
+if ((Get-CimInstance Win32_ComputerSystem).Model -notmatch 'Virtual|VMware|VirtualBox|Hyper-V') { throw "Not a VM. Aborting." }
+```
+
 ## 1. Download and verify
 
 1. Sysmon: Microsoft Learn > Sysinternals > Sysmon download page. Save and extract to `C:\Lab\Sysmon`.
@@ -33,6 +39,10 @@ Get-AuthenticodeSignature C:\Lab\Sysmon\Sysmon64.exe | Select-Object Status, Sig
 Expected: `Status` is `Valid` and the signer is Microsoft. If not, stop and re-download.
 
 ## 2. Install Sysmon with the config
+
+**Newer Windows 11 option.** Recent Windows 11 builds include Sysmon as an optional Windows feature (Settings > System > Optional features > More Windows features, or `Dism /Online /Enable-Feature /FeatureName:Sysmon`, then `sysmon -i`). It must not coexist with a Sysinternals install, and the update that delivers it varies by build, so check Microsoft Learn first. This plan uses the downloaded Sysinternals version, which works on any Windows 11 build; note which you used in the results.
+
+**Config choice.** The SwiftOnSecurity config is the classic, readable starter. **sysmon-modular** (github.com/olafhartong/sysmon-modular) is a newer alternative that maps its rules to MITRE ATT&CK and is maintained as separate modules. Start with SwiftOnSecurity; try sysmon-modular afterwards and compare the event volume.
 
 In an elevated PowerShell:
 
@@ -82,30 +92,35 @@ Atomic Red Team is Red Canary's open-source library of small, documented tests m
 Add-MpPreference -ExclusionPath 'C:\AtomicRedTeam'
 ```
 
-2. Install from the official instructions at github.com/redcanaryco/invoke-atomicredteam. Download the install script, **read it first**, then run it:
+2. Install using the method in the official Red Canary instructions (github.com/redcanaryco/invoke-atomicredteam). It downloads and runs a script from the official repository, which is why it is VM-only. Better still, save the script, read it, then run it:
 
 ```powershell
+IEX (IWR 'https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1' -UseBasicParsing)
 Install-AtomicRedTeam -getAtomics
 Import-Module 'C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1' -Force
 ```
 
-3. List what exists and read what each test does:
+3. List what exists and read what each test does. **Test numbers change between library versions: never run a test by number without reading its name and details first.**
 
 ```powershell
 Invoke-AtomicTest T1059.001 -ShowDetailsBrief     # PowerShell
 Invoke-AtomicTest T1053.005 -ShowDetailsBrief     # Scheduled Task
 ```
 
-4. Pick one simple test from each list (for T1053.005, one that uses `schtasks.exe`). Check prerequisites, run it, then clean up:
+4. **Safe tests only.** Run a test only if `-ShowDetails` shows that it runs local commands and nothing else.
+   - **T1059.001 (PowerShell):** choose a test that only runs a local command, such as an encoded or parameter-variation command that prints text. **Avoid** anything that downloads and runs code (download cradles, `IEX` from a URL) and anything named Mimikatz, BloodHound/SharpHound, PowerUp or "Invoke-AllChecks". At the time of writing, the first test in the T1059.001 list has been the Mimikatz one, which downloads a credential-dumping tool. Do not run it.
+   - **T1053.005 (scheduled task):** choose a test that creates a task locally with `schtasks.exe` (or the PowerShell scheduled-task cmdlets) and has a cleanup step that deletes it. Skip tests that need a remote host.
+   - If no list item is clearly safe, use the manual equivalents instead: `powershell -EncodedCommand <base64 of Write-Output hello>` for T1059.001, and `schtasks /create` then `schtasks /delete` (as in Lab 06) for T1053.005.
+5. Check prerequisites, run the chosen test, then clean up:
 
 ```powershell
-Invoke-AtomicTest T1059.001 -TestNumbers <n> -CheckPrereqs
-Invoke-AtomicTest T1059.001 -TestNumbers <n>
-Invoke-AtomicTest T1059.001 -TestNumbers <n> -Cleanup
-# repeat for T1053.005
+Invoke-AtomicTest T1053.005 -TestNumbers <n> -CheckPrereqs
+Invoke-AtomicTest T1053.005 -TestNumbers <n>
+Invoke-AtomicTest T1053.005 -TestNumbers <n> -Cleanup
+# repeat for T1059.001, using the test you chose after reading it
 ```
 
-5. For each test, record what **each** log source showed for the same minute:
+6. For each test, record what **each** log source showed for the same minute:
 
 | Source | What to look for |
 |---|---|
@@ -115,7 +130,7 @@ Invoke-AtomicTest T1059.001 -TestNumbers <n> -Cleanup
 | Security 4688 / 4698 | process creation with command line (Lab 06 setup); scheduled task created |
 | PowerShell Operational 4104 | script block text (enable script block logging in Group Policy first) |
 
-6. Write one detection idea per technique (for example: `schtasks.exe` with `/create` launched by `powershell.exe` or `cmd.exe`). Note the false positives you can think of.
+7. Write one detection idea per technique (for example: `schtasks.exe` with `/create` launched by `powershell.exe` or `cmd.exe`). Note the false positives you can think of.
 
 ## 6. Clean up
 

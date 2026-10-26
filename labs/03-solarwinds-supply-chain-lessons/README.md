@@ -1,5 +1,4 @@
-<!-- DRAFT for Casey's review (branch phase2-drafts). Not pushed. Sections 5 and 6 are proposals, edit freely. -->
-# Lab 03 — SolarWinds 2020: When the Trusted Update Is the Attack
+# Course analysis: Lab 03 — SolarWinds 2020: When the Trusted Update Is the Attack
 
 **Environment:** Desk research. No systems were touched and none were tested.
 **Tools:** US GAO and CISA publications, Microsoft and FireEye technical write-ups, NIST NVD entry for CVE-2020-10148, MITRE ATT&CK
@@ -28,10 +27,10 @@ Attackers got malicious code into software update packages that thousands of org
 
 ## Method
 
-1. Anchor each claim to a government source (GAO, CISA, NVD) and use vendor research (Microsoft, FireEye) only for technical detail.
+1. Read government sources (GAO, CISA, NVD) for the facts, and vendor research (Microsoft, FireEye) for technical detail.
 2. Keep two lists apart: *how the attackers got in* (build and distribution) and *what customers could have done* (inventory, monitoring, privilege).
-3. Check the vulnerability numbers: confirm that the CVE in my notes belongs to a different attack path from SUNBURST.
-4. Write six recommendations a manager can approve, each phrased as a control with an owner.
+3. Keep SUNBURST and CVE-2020-10148 separate: they are different attack paths.
+4. Write six recommendations a manager can act on.
 
 ---
 
@@ -39,11 +38,12 @@ Attackers got malicious code into software update packages that thousands of org
 
 | When | Event | Source |
 |---|---|---|
-| From Sept 2019 (a 2022 GAO report says as early as Jan 2019) | Attackers are inside SolarWinds' network; a test insertion of code into Orion follows (Microsoft dates test code to Oct 2019) | GAO (2021, 2022), Microsoft |
+| From Sept 2019 (GAO-22-104746 says as early as Jan 2019) | Attackers are inside SolarWinds' network; a test insertion of code into Orion follows (Microsoft dates test code to Oct 2019) | GAO (2021 blog, 2022 report), Microsoft |
 | Mar - Jun 2020 | Trojanized Orion updates released: versions 2019.4 HF 5 through 2020.2.1 HF 1 | CISA |
 | 2020 | SUNBURST sits dormant, then reaches out to attacker servers under `avsvmcloud.com`, with unique subdomains per victim | Microsoft, FireEye |
 | Nov - Dec 2020 | FireEye finds the campaign while investigating an intrusion into its own systems and tells SolarWinds | GAO |
-| 13 Dec 2020 | CISA publishes an alert and Emergency Directive 21-01: federal civilian agencies must review for compromise and disconnect or power down affected Orion products | CISA |
+| 8 Dec 2020 | FireEye discloses that it was breached and that its red-team tools were stolen | FireEye announcement (title in Sources) |
+| 13 Dec 2020 | CISA publishes an alert and Emergency Directive 21-01: federal civilian agencies must review for compromise and disconnect or power down affected Orion products. A fuller advisory, AA20-352A, follows on 17 Dec | CISA |
 | Mid Dec 2020 | FireEye, Microsoft and GoDaddy turn the attackers' domain into a kill switch/sinkhole. It stops that backdoor from running in some cases but does not evict attackers who have other access | FireEye, press reports |
 | 15 Apr 2021 | US government formally attributes the campaign to Russia's Foreign Intelligence Service (SVR), also tracked as APT29, Cozy Bear and, by Microsoft, NOBELIUM | White House statement |
 
@@ -61,7 +61,7 @@ Attackers got malicious code into software update packages that thousands of org
 
 ## Controls that failed or were missing
 
-(My analysis, based on the public reports.)
+*Added while preparing this page (not part of the original course submission); based on the public reports.*
 
 | Control | Gap |
 |---|---|
@@ -88,7 +88,9 @@ From my briefing, in plain language:
 
 ---
 
-## What an IT support or SOC analyst would do differently (draft, my proposals)
+## What an IT support or SOC analyst would do differently
+
+*Added while preparing this page (not part of the original course submission).*
 
 - **Know where the management tools are.** Keep a living list of monitoring, patching and remote-access servers with their versions.
 - **Stage updates.** Install vendor updates on a test group first and compare behaviour (new outbound domains, new services, new accounts) before wide rollout.
@@ -100,7 +102,9 @@ From my briefing, in plain language:
 
 ## Verification
 
-| Claim in my course material | Checked against | Result |
+*Added while preparing this page (not part of the original course submission).* Statements from my course material were compared with the public sources.
+
+| Statement in my course material | Compared with | Result |
 |---|---|---|
 | Updates released March to June 2020 | CISA alert | Confirmed (versions 2019.4 HF 5 to 2020.2.1 HF 1) |
 | Nearly 18,000 customers received the update | GAO | Confirmed (SolarWinds estimate) |
@@ -135,6 +139,8 @@ From my briefing, in plain language:
 - US Government Accountability Office, GAO-22-104746 (Jan 2022), federal response to the SolarWinds and Microsoft Exchange incidents. https://www.gao.gov/products/gao-22-104746
 - CISA, "Active Exploitation of SolarWinds Software" (13 Dec 2020, revised 14 Dec 2020). https://www.cisa.gov/news-events/alerts/2020/12/13/active-exploitation-solarwinds-software
 - CISA, Emergency Directive 21-01. https://www.cisa.gov/emergency-directive-21-01
+- CISA, Alert AA20-352A, "Advanced Persistent Threat Compromise of Government Agencies, Critical Infrastructure, and Private Sector Organizations" (17 Dec 2020, revised 15 Apr 2021). https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-352a
+- FireEye, "FireEye Shares Details of Recent Cyber Attack, Actions to Protect Community" (8 Dec 2020), originally on the FireEye blog (now Mandiant / Google Cloud).
 - Microsoft Security, "Analyzing Solorigate, the compromised DLL file that started a sophisticated cyberattack" (18 Dec 2020). https://www.microsoft.com/en-us/security/blog/2020/12/18/analyzing-solorigate-the-compromised-dll-file-that-started-a-sophisticated-cyberattack-and-how-microsoft-defender-helps-protect/
 - FireEye (now Mandiant), "Highly Evasive Attacker Leverages SolarWinds Supply Chain to Compromise Multiple Global Victims With SUNBURST Backdoor" (Dec 2020). https://cloud.google.com/blog/topics/threat-intelligence/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor
 - NIST National Vulnerability Database, CVE-2020-10148. https://nvd.nist.gov/vuln/detail/CVE-2020-10148

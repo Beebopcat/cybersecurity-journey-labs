@@ -1,5 +1,4 @@
-<!-- DRAFT for Casey's review (branch phase2-drafts). Not pushed. Sections 5 and 6 are proposals, edit freely. -->
-# Lab 02 — Equifax 2017: How a Missed Patch and an Expired Certificate Became a Breach of About 148 Million People
+# Course analysis: Lab 02 — Equifax 2017: How a Missed Patch and an Expired Certificate Became a Breach of About 148 Million People
 
 **Environment:** Desk research. No systems were touched and none were tested.
 **Tools:** US GAO report GAO-18-559, US House Oversight Committee report (Dec 2018), NIST NVD entry for CVE-2017-5638, FTC and DOJ public documents
@@ -22,16 +21,16 @@ In 2017 attackers stole personal data on roughly 148 million people from Equifax
 | One person missed a patch email | The Oversight report describes a chain of process failures: an out-of-date alert distribution, no reliable inventory of what ran Struts, a scan that missed the portal, an expired monitoring certificate, flat network access. Early public statements blamed individual human error; the official reports do not stop there. |
 | A patch order means the system is patched | The alert went out within days and required patching in 48 hours. The portal was still vulnerable months later. **Nobody verified completion.** |
 | Monitoring was in place, so the attackers would have been seen | The traffic-inspection device could not inspect encrypted traffic because its certificate had expired. The attackers used encrypted channels. |
-| The number of months is settled | It is not. The House report says the certificate had been expired about 19 months (expiry 31 Jan 2016 per its documents); GAO, working from Equifax's account, says about 10. Both agree it was expired before the data theft began in May 2017. |
+| The number of months is settled | It is not. The House report says the certificate had been expired about 19 months; GAO, working from Equifax's account, says about 10. Both agree it was expired before the data theft began in May 2017. |
 
 ---
 
 ## Method
 
-1. Read the sources in order of authority: GAO and House Oversight first, then NVD for the vulnerability, then FTC and DOJ for outcomes and attribution.
-2. Build a dated timeline and mark every date with its source. Where two sources disagree, keep both and say so.
-3. For each failed control, write the control as an ordinary IT rule ("critical patches within 48 hours") and find the step where it silently stopped working.
-4. Turn the findings into six recommendations a non-technical executive could approve, each with an owner and a check.
+1. Read public sources: the GAO and House Oversight reports, NVD for the vulnerability, FTC and DOJ documents for outcomes and attribution.
+2. Reconstruct a dated timeline, then separate the cause (a missed patch) from the contributing factors (monitoring, segmentation, credentials).
+3. Write the incident up twice: as a full report, then condensed into a short leadership briefing.
+4. Turn the findings into six recommendations a non-technical executive could act on.
 
 ---
 
@@ -90,7 +89,9 @@ From my briefing, in plain language:
 
 ---
 
-## What an IT support or SOC analyst would do differently (draft, my proposals)
+## What an IT support or SOC analyst would do differently
+
+*Added while preparing this page (not part of the original course submission).*
 
 - **Verify, do not assume.** After any critical-patch notice, check the version on the host, not the ticket status.
 - **Watch the watchers.** Add a recurring check that every inspection device, log forwarder and certificate is alive and unexpired. A silent sensor is an incident of its own.
@@ -102,16 +103,18 @@ From my briefing, in plain language:
 
 ## Verification
 
-Claims in this writeup were checked against the primary reports, not copied from my slides.
+*Added while preparing this page (not part of the original course submission).* Statements from my course material were compared with the primary reports.
 
-| Claim in my course material | Checked against | Result |
+| Statement in my course material | Compared with | Result |
 |---|---|---|
 | 48-hour patch policy | House Oversight report | Confirmed |
 | Scan missed the portal (root directory) | House Oversight report | Confirmed (statement of Equifax's interim security chief) |
 | 48 unrelated databases, about 76 days | GAO-18-559 | Confirmed |
 | Certificate expired 19 months | House Oversight (19) vs GAO (10) | Sources differ; both stated above |
 | "All databases unencrypted" | House Oversight | Overstated; corrected to "some sensitive data" |
-| Total cost of about $2.4-2.5 billion | Not re-verified | Dropped from this writeup |
+| Attackers' first access 13-14 March (capstone report) | GAO and House Oversight | Sources say 10 March; corrected |
+| Total cost of about $2.4-2.5 billion; "$1 billion mandated" for IT security | No primary source used here | Not verified; dropped from this page |
+| YubiKeys for "the highest encryption" (capstone report) | General knowledge | Hardware security keys give strong multi-factor authentication; they do not encrypt data. Reworded |
 
 ---
 
@@ -119,7 +122,7 @@ Claims in this writeup were checked against the primary reports, not copied from
 
 1. **"Walk me through a breach you studied."** Struts flaw disclosed in March, patch ordered, never verified on the portal, attackers in by 10 March, data out from 13 May, caught only on 29 July when a certificate was renewed. The root cause was missing verification and monitoring health checks, not one missed email.
 2. **"What would you check first as a help-desk or SOC analyst?"** Whether the sensors are working: certificate dates, log flow, agent health. Then patch state on the host itself, not the ticket.
-3. **"How do you handle conflicting information?"** I found GAO and the House report disagree on how long the certificate was expired (10 vs 19 months). I kept both, cited both, and noted that the conclusion holds either way.
+3. **"How do you handle conflicting information?"** GAO and the House report disagree on how long the certificate was expired (10 vs 19 months). I cite both and point out that the conclusion holds either way.
 
 ---
 

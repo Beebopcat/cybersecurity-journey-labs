@@ -12,7 +12,7 @@
 
 - **10 passing automated tests** for the permissions simulator (`node --test`). I ran them on Windows 11 with Node.js 24 (10 of 10 passed); they have no dependencies, so any Node.js 22+ should run them. GitHub Actions runs them on every push.
 - **Lab 01** is a full writeup of a real troubleshooting case: [Diagnosing an application failure from Windows Event Logs](labs/01-diagnosing-an-application-failure-from-event-logs/).
-- **Labs 02 to 05** are written summaries of course work (two breach case studies, a signature-detection paper and the capstone incident report), checked against public sources such as GAO, House Oversight and CISA. They are desk analysis, not hands-on lab work.
+- **Labs 02 to 05** are written summaries of course work (two breach case studies, a signature-detection paper and the capstone incident report), written from public sources such as GAO, House Oversight and CISA. They are course analysis, not hands-on lab work.
 - **Labs 06 and 07** are step-by-step home-lab plans (Windows log triage; Sysmon). They are planned and not yet performed.
 - **Live browser demo** of the simulator's sample UI: [beebopcat.github.io/public-demos/permissions](https://beebopcat.github.io/public-demos/permissions/).
 - Screenshots and a short clip are in [Media](#media-the-permissions-simulator-in-the-browser) below.
@@ -29,18 +29,20 @@ Needs Node.js 22 or newer. No npm packages and no network access. Read Lab 01 by
 
 ### Limitations
 
-- One lab (01) is a hands-on writeup with a verified result. Labs 02 to 05 are summaries of coursework and public-source analysis; Labs 06 and 07 are plans with no results yet. The A+ Core 1 certification is in progress and the others are planned, not earned.
+- One lab (01) is a hands-on writeup with a verified result. Labs 02 to 05 are course analysis; Labs 06 and 07 are plans with no results yet. CompTIA A+ is in progress; Network+, Security+, CySA+ and CCNA are planned, not earned.
 - The simulator models only read/write/execute bits on one fictional file. It does not run a shell, touch a real filesystem or change real permissions.
 - Lab evidence is sanitised, so raw logs, hostnames and exports are intentionally not included.
 - The simulator code and tests were produced with AI assistance and then reviewed (details in its README).
 - Labs 02 to 05 are rewritten summaries of my own coursework. Course slides, the capstone report and the course template are not republished, and AI tools were used for research and editing help, as disclosed in my course submissions. These writeups were drafted with AI assistance and reviewed by me.
 
 ---
-Hands-on lab work documented as I move from IT fundamentals toward a SOC analyst role.
+Hands-on lab work and course analysis documented as I move from IT fundamentals toward a SOC analyst role.
 
-Every entry here follows the same rule: **a real problem, a documented method, and a verified
-result.** No tutorial walkthroughs copied from a course. If a lab is here, I did the work and
-I can defend every claim in it.
+Each entry carries one of three statuses, so you can tell what was done from what was studied or planned:
+
+- **Lab:** hands-on work with a documented method and a verified result.
+- **Course analysis:** a summary of my own coursework, written from public sources. Not hands-on, and the original course material is not republished.
+- **Planned:** a step-by-step plan that has not been performed yet.
 
 ---
 
@@ -58,15 +60,15 @@ from the start would be a less honest document and a less useful one.
 
 | # | Lab | Skills | Status |
 |---|---|---|---|
-| 01 | [Diagnosing an application failure from Windows Event Logs](labs/01-diagnosing-an-application-failure-from-event-logs/) | Event Viewer, WER, PowerShell, root-cause analysis | ✅ Done |
-| 02 | [Equifax 2017: breach lessons](labs/02-equifax-2017-breach-lessons/) | Patch and certificate lifecycle, segmentation, timeline building, leadership briefing | Summary (course exercise, public sources) |
-| 03 | [SolarWinds 2020: supply-chain lessons](labs/03-solarwinds-supply-chain-lessons/) | Supply-chain risk, vendor-update trust, threat research, leadership briefing | Summary (course exercise, public sources) |
-| 04 | [Signature detection paper](labs/04-signature-detection-paper/) | Snort rules, IDS vs IPS, signature vs anomaly detection | Summary (course paper, not republished) |
-| 05 | [Incident report capstone](labs/05-incident-report-capstone-summary/) | Incident reporting, IoCs, NIST SP 800-61 mapping | Summary (report not republished) |
-| 06 | [Home lab: Windows log triage](labs/06-home-lab-windows-log-triage/PLAN.md) | Event IDs, `Get-WinEvent`, triage | Planned, not yet performed |
-| 07 | [Home lab: Sysmon](labs/07-home-lab-sysmon/PLAN.md) | Sysmon, ATT&CK T1059 and T1053, Atomic Red Team | Planned, not yet performed |
+| 01 | [Diagnosing an application failure from Windows Event Logs](labs/01-diagnosing-an-application-failure-from-event-logs/) | Event Viewer, WER, PowerShell, root-cause analysis | Lab (hands-on, verified) |
+| 02 | [Equifax 2017: breach lessons](labs/02-equifax-2017-breach-lessons/) | Patch and certificate lifecycle, segmentation, timeline building, leadership briefing | Course analysis |
+| 03 | [SolarWinds 2020: supply-chain lessons](labs/03-solarwinds-supply-chain-lessons/) | Supply-chain risk, vendor-update trust, threat research, leadership briefing | Course analysis |
+| 04 | [Signature detection paper](labs/04-signature-detection-paper/) | Snort rules, IDS vs IPS, signature vs anomaly detection | Course analysis (paper summary, result unverified) |
+| 05 | [Incident report capstone](labs/05-incident-report-capstone-summary/) | Incident reporting, IoCs, NIST SP 800-61 mapping | Course analysis |
+| 06 | [Home lab: Windows log triage](labs/06-home-lab-windows-log-triage/PLAN.md) | Event IDs, `Get-WinEvent`, triage | Planned |
+| 07 | [Home lab: Sysmon](labs/07-home-lab-sysmon/PLAN.md) | Sysmon, ATT&CK T1059 and T1053, Atomic Red Team | Planned |
 
-Status key: **Done** = I did the work and verified the result. **Summary** = a written summary of coursework or public-source analysis, not hands-on lab work. **Planned** = a step-by-step plan with an empty results template.
+Status key: **Lab** = hands-on and verified. **Course analysis** = a summary of my coursework. **Planned** = not yet performed (a step-by-step plan with an empty results template).
 
 ---
 
@@ -99,9 +101,9 @@ A browser sample UI of the offline permissions simulator is live at [https://bee
 
 ## Certification track
 
-**CompTIA A+ Core 1 → A+ Core 2 → Network+ → Security+ → CySA+**
+**CompTIA A+ → Network+ → Security+ → CySA+ → Cisco CCNA**
 
-A+ Core 1 is in progress; the remaining certifications are planned.
+CompTIA A+ is in progress (studying now). Network+, Security+, CySA+ and CCNA are planned.
 
 Sequenced on purpose. Security+ assumes networking fluency it does not teach, so I'm building the
 foundation before the credential that depends on it.

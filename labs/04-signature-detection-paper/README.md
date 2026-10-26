@@ -1,7 +1,4 @@
-<!-- DRAFT for Casey's review (branch phase2-drafts). Not pushed.
-     Decision: SUMMARY ONLY, no PDF of the paper. Its only figure is a screenshot of the course lab page (assignment text, rubric, VM name), which is course material. The exact lab signature string and the assignment's test commands are also left out because they are the graded answer.
-     To confirm before publishing: the paper says you checked for a log entry in the IPS log. The saved figure shows the first read of the log failing on a mistyped path. Confirm you saw the final successful match, or soften the "Result" line. -->
-# Lab 04 — Signature Detection and Remote-Shell Prevention (paper summary)
+# Course analysis: Lab 04 — Signature Detection and Remote-Shell Prevention (paper summary)
 
 **Environment:** Course-provided virtual lab: Snort IDS/IPS on Linux, packet capture
 **Tools:** Snort rules, a packet capture to find the bytes, a test payload, the IPS log
@@ -28,9 +25,9 @@ Illustrative shape of such a rule (placeholder values, not the lab answer):
 drop tcp any any -> any any (msg:"remote shell signature"; content:"<lab string>"; nocase; sid:1000001; rev:1;)
 ```
 
-## Result
+## Result: unverified
 
-The paper reports that I sent the test payload and checked two things: whether a shell prompt came back, and whether the rule's entry appeared in the IPS log. It also records a small lesson: a mistyped log path shows nothing, so a missing log file cannot tell you whether the rule worked. Check the path first, then the rule.
+This is a summary of my paper, not a verified lab result. The paper says I sent the test payload and checked two things: whether a shell prompt came back, and whether the rule's entry appeared in the IPS log. I do not recall seeing the Snort alert fire, so I am not claiming that the rule was confirmed to work. The paper also records a small lesson: a mistyped log path shows nothing, so a missing log file cannot tell you whether the rule worked. Check the path first, then the rule.
 
 ## What the paper concludes
 

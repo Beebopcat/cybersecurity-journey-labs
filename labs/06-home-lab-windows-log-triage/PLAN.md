@@ -54,12 +54,18 @@ Do each step, then write the time down in the results template.
 
 | Step | Command | Event you expect |
 |---|---|---|
-| A. Failed logons | `1..5 \| % { net use \\localhost\IPC$ /user:labtest WrongPass$_ 2>$null }` | 4625 in Security, five of them |
-| B. New user | `net user labuser 'T3st-Only!234' /add` | 4720 |
+| A. Failed logons | the command under the table | 4625 in Security, five of them |
+| B. New user | `net user labuser <throwaway-password> /add` | 4720 |
 | C. Add to group | `net localgroup Administrators labuser /add` (VM only; a new local user is already in Users) | 4732 |
 | D. Scheduled task | `schtasks /create /tn LabTask /tr "cmd.exe /c echo lab" /sc once /st 23:59` | 4698 (and the TaskScheduler log, if enabled) |
 | E. New service | `sc.exe create LabSvc binPath= "C:\Windows\System32\cmd.exe /c echo lab"` | 7045 in System |
 | F. Successful logon | sign out and back in as `labadmin` | 4624 (note LogonType) |
+
+Step A command (run it in PowerShell):
+
+```powershell
+1..5 | ForEach-Object { net use \\localhost\IPC$ /user:labtest "WrongPass$_" 2>$null }
+```
 
 Tip for step A: `labtest` does not exist, so you will also see which status code Windows logs for an unknown user. Compare with a real user and a wrong password.
 
